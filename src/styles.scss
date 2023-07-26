@@ -1,0 +1,158 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 15px;
+  background: rgb(204,111,21);
+background: radial-gradient(circle, rgba(204,111,21,1) 17%, rgba(49,122,35,0.890386843213848) 98%);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e2dfdaa9;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+form div {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f7f7f7;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.task-name {
+  flex-grow: 1;
+}
+
+select {
+  padding: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Animation for dropdown menu */
+.select-enter {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.select-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Animation for submit button */
+.button-enter {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+
+.button-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+/* Media queries */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 5px;
+  }
+  
+  h1 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  li {
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+  
+  select {
+    padding: 3px;
+  }
+  
+  button {
+    padding: 8px;
+  }
+}
