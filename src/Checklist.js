@@ -11,7 +11,7 @@ function Checklist() {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('/api/tasks');
+      const response = await axios.get('https://checklistproject-31482afaf05a.herokuapp.com/api/tasks');
       setTasks(response.data.tasks);
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -20,7 +20,7 @@ function Checklist() {
 
   const handleStatusChange = async (index, newStatus) => {
     try {
-      await axios.put(`/api/tasks/${index}`, { status: newStatus });
+      await axios.put(`https://checklistproject-31482afaf05a.herokuapp.com/api/tasks${index}`, { status: newStatus });
       const updatedTasks = tasks.map((task, i) =>
         i === index ? { ...task, taskStatus: newStatus } : task
       );
