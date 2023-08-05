@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './styles.scss';
 
-const App = () => {
+function Checklist() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -13,55 +14,32 @@ const App = () => {
       const response = await axios.get('/api/tasks');
       setTasks(response.data.tasks);
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching tasks:', error);
     }
   };
 
-  const updateTaskStatus = async (index, status) => {
+  const handleStatusChange = async (index, newStatus) => {
     try {
-      await axios.put(`/api/tasks/${index}`, { status });
-      fetchTasks(); // Fetch updated tasks from the backend
+      await axios.put(`/api/tasks/${index}`, { status: newStatus });
+      const updatedTasks = tasks.map((task, i) =>
+        i === index ? { ...task, taskStatus: newStatus } : task
+      );
+      setTasks(updatedTasks);
     } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const submitTasks = async () => {
-    try {
-      await axios.post('/api/tasks/submit');
-      console.log('Tasks submitted successfully');
-    } catch (error) {
-      console.error(error);
+      console.error('Error updating task status:', error);
     }
   };
 
   return (
     <div className="container">
       <h1>Checklist</h1>
-      <form>
-        {/* Job Number */}
-        <div>
-          <label htmlFor="jobNumber">Job Number:</label>
-          <input type="text" id="jobNumber" />
-        </div>
-        {/* Customer Name */}
-        <div>
-          <label htmlFor="customerName">Customer Name:</label>
-          <input type="text" id="customerName" />
-        </div>
-        {/* Date */}
-        <div>
-          <label htmlFor="date">Date:</label>
-          <input type="text" id="date" />
-        </div>
-      </form>
       <ul>
         {tasks.map((task, index) => (
           <li key={index}>
-            <span className="task-name">{task.task}</span>
+            <span className="task-name">{task.taskName}</span>
             <select
-              value={task.status}
-              onChange={(e) => updateTaskStatus(index, e.target.value)}
+              value={task.taskStatus}
+              onChange={(e) => handleStatusChange(index, e.target.value)}
             >
               <option value="not-done">Not Done</option>
               <option value="done">Done</option>
@@ -70,10 +48,8 @@ const App = () => {
           </li>
         ))}
       </ul>
-      <button onClick={submitTasks}>Submit Tasks</button>
     </div>
   );
-};
+}
 
-export default App;
-
+export default Checklist;
