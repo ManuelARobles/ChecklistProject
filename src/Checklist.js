@@ -20,6 +20,23 @@ function Checklist() {
     }
   };
 
+  const handleAddTask = async () => {
+    try {
+      const response = await axios.post('https://checklistproject-31482afaf05a.herokuapp.com/api/tasks', {
+        taskName: newTaskName,
+        taskStatus: newTaskStatus,
+      });
+
+      const newTask = response.data.task;
+      setTasks([...tasks, newTask]);
+
+      setNewTaskName('');
+      setNewTaskStatus('not-done');
+    } catch (error) {
+      console.error('Error adding new task:', error);
+    }
+  };
+
   const handleStatusChange = async (index, newStatus) => {
     try {
       await axios.put(`https://checklistproject-31482afaf05a.herokuapp.com/api/tasks/${index}`, { status: newStatus });
@@ -32,29 +49,15 @@ function Checklist() {
     }
   };
 
-  const handleAddTask = async () => {
-    try {
-      await axios.post('https://checklistproject-31482afaf05a.herokuapp.com/api/tasks', {
-        taskName: newTaskName,
-        taskStatus: newTaskStatus,
-      });
-      setNewTaskName('');
-      setNewTaskStatus('not-done');
-      fetchTasks();
-    } catch (error) {
-      console.error('Error adding new task:', error);
-    }
-  };
-
   return (
     <div className="container">
       <h1>Checklist</h1>
-      <form>
+      <div className="add-task">
         <input
           type="text"
           value={newTaskName}
           onChange={(e) => setNewTaskName(e.target.value)}
-          placeholder="Enter new task name"
+          placeholder="Task Name"
         />
         <select
           value={newTaskStatus}
@@ -64,8 +67,8 @@ function Checklist() {
           <option value="done">Done</option>
           <option value="N/A">N/A</option>
         </select>
-        <button type="button" onClick={handleAddTask}>Add Task</button>
-      </form>
+        <button onClick={handleAddTask}>Add Task</button>
+      </div>
       <ul>
         {tasks.map((task, index) => (
           <li key={index}>
@@ -86,3 +89,4 @@ function Checklist() {
 }
 
 export default Checklist;
+
